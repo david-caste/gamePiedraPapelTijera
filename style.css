@@ -1,0 +1,22 @@
+body {
+    background-color: rgb(66, 61, 61);
+}
+/* Menú Inicial*/
+.titulo {
+    font-size: 100px;
+    color: rgb(123, 201, 204);
+}
+
+#btn-menu {
+    font-size: 30px;
+    padding: 10px 20px;
+    background-color: rgb(123, 201, 204);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container-menu {
+    text-align: center;
+    margin-top: 20%;
+}

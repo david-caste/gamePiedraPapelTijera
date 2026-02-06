@@ -1,0 +1,90 @@
+//Menú
+const vistaMenuInicial = document.querySelector(".container-menu");
+
+const opcionPersonajesContainer = document.getElementById("skin-personaje");
+
+//Datos ataque
+const skinJugador = document.getElementById("etiqueta-jugador");
+
+//Botones
+const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
+const botonMenu = document.getElementById("btn-menu");
+//Variables
+let personajes = [];
+let opcionPersonajes;
+
+//Clase personaje
+class personaje {
+    constructor(nombre) {
+        this.nombre = nombre;
+        this.ataques = [];
+    }
+}
+
+//Inserción de personajes
+let personajeUno = new personaje("Warrior");
+let personajeDos = new personaje("Mage");
+let personajeTres = new personaje("Archer");
+
+//Ataques de personajes
+personajeUno.ataques.push(
+    {nombre: "✂", id: "btn-tijera"},
+    {nombre: "🥌", id: "btn-piedra"},
+    {nombre: "📄", id: "btn-papel"}
+)
+
+personajeDos.ataques.push(
+    {nombre: "✂", id: "btn-tijera"},
+    {nombre: "🥌", id: "btn-piedra"},
+    {nombre: "📄", id: "btn-papel"}
+)
+
+personajeTres.ataques.push(
+    {nombre: "✂", id: "btn-tijera"},
+    {nombre: "🥌", id: "btn-piedra"},
+    {nombre: "📄", id: "btn-papel"}
+)
+
+personajes.push(personajeUno, personajeDos, personajeTres);
+
+personajes.forEach((personaje) => {
+    opcionPersonajes = `
+    <input type="radio" name="personaje" id=${personaje.nombre} />
+    <label class="tarjeta-personaje" for=${personaje.nombre}>
+        <p>${personaje.nombre}</p>
+    </label>
+    `;
+    //Personajes agregados en HTML
+    opcionPersonajesContainer.innerHTML += opcionPersonajes;
+});
+
+//Sección Skin personaje oculto
+skinJugador.style.display = "none";
+
+//Input personajes
+const inputPersonajeUno = document.getElementById("personajeUno");
+const inputPersonajeDos = document.getElementById("personajeDos");
+const inputPersonajeTres = document.getElementById("personajeTres");
+
+//Selección de personaje
+botonSeleccionarPersonaje.addEventListener("click", () => {
+    if(inputPersonajeUno.checked) {
+        skinJugador.innerHTML = personajeUno.nombre;
+    }
+    else if(inputPersonajeDos.checked) {
+        skinJugador.innerHTML = personajeDos.nombre;
+    }
+    if(inputPersonajeTres.checked) {
+        skinJugador.innerHTML = personajeTres.nombre;
+    }
+    else {
+        alert("Selecciona un personaje");
+    }
+});
+
+//Boton inicio menu
+botonMenu.addEventListener("click", () => {
+    vistaMenuInicial.style.display = "none";
+    opcionPersonajesContainer.style.display = "flex";
+});
+//Funciones
