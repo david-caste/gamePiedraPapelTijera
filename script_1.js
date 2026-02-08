@@ -1,6 +1,7 @@
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
-
+//Elección Personaje
+const seccionEleccionPersonaje = document.getElementById("seleccion-personaje");
 const opcionPersonajesContainer = document.getElementById("skin-personaje");
 
 //Datos ataque
@@ -45,6 +46,9 @@ personajeTres.ataques.push(
     {nombre: "📄", id: "btn-papel"}
 )
 
+//Ocultar elección personaje
+seccionEleccionPersonaje.style.display = "none";
+
 personajes.push(personajeUno, personajeDos, personajeTres);
 
 personajes.forEach((personaje) => {
@@ -85,6 +89,6 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
 //Boton inicio menu
 botonMenu.addEventListener("click", () => {
     vistaMenuInicial.style.display = "none";
-    opcionPersonajesContainer.style.display = "flex";
+    seccionEleccionPersonaje.style.display = "flex";
 });
 //Funciones
