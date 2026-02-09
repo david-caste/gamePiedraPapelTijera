@@ -21,3 +21,20 @@ body {
     margin-top: 20%;
 }
 
+/*Elecci+on personaje*/
+#seleccion-personaje{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#skin-personaje img{
+    width: 200px;
+}
+
+/*Botón*/
+#eleccion-personajes{
+    height: 30px;
+    width: 130px;
+    background-color: rgb(123, 201, 204);
+}

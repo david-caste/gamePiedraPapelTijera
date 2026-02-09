@@ -16,16 +16,17 @@ let opcionPersonajes;
 
 //Clase personaje
 class personaje {
-    constructor(nombre) {
+    constructor(nombre, img) {
         this.nombre = nombre;
+        this.img = img;
         this.ataques = [];
     }
 }
 
 //Inserción de personajes
-let personajeUno = new personaje("Warrior");
-let personajeDos = new personaje("Mage");
-let personajeTres = new personaje("Archer");
+let personajeUno = new personaje("Warrior", './img/character_1.webp');
+let personajeDos = new personaje("Mage", './img/character_3.jpg');
+let personajeTres = new personaje("Archer", './img/character_2.webp');
 
 //Ataques de personajes
 personajeUno.ataques.push(
@@ -53,9 +54,10 @@ personajes.push(personajeUno, personajeDos, personajeTres);
 
 personajes.forEach((personaje) => {
     opcionPersonajes = `
-    <input type="radio" name="personaje" id=${personaje.nombre} />
+    <input type="radio" name="personaje" id=${personaje.nombre} style="display:none"/>
     <label class="tarjeta-personaje" for=${personaje.nombre}>
         <p>${personaje.nombre}</p>
+        <img src=${personaje.img}>
     </label>
     `;
     //Personajes agregados en HTML
