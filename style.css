@@ -21,20 +21,47 @@ body {
     margin-top: 20%;
 }
 
-/*Elecci+on personaje*/
+/*Elección personaje*/
 #seleccion-personaje{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+#skin-personaje{
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    color: #fff;
+    margin-top: 80px;
+}
+
 #skin-personaje img{
     width: 200px;
+    border: solid 2px rgb(123, 201, 204);
+}
+/*Efecto*/
+#skin-personaje img:hover{
+    border: solid 2px rgb(230, 245, 27);
+    opacity: 0.6;
+    cursor: pointer;
 }
 
 /*Botón*/
 #eleccion-personajes{
+    box-sizing: content-box;
+    font-size: 20px;
     height: 30px;
     width: 130px;
+    padding: 10px;
     background-color: rgb(123, 201, 204);
+    margin-top: 55px;
+    border-radius: 20px;
+    border: solid 3px transparent
+}
+/*Efecto*/
+#eleccion-personajes:hover{
+    opacity: 0.8;
+    border: solid 3px rgb(230, 245, 27);
+    cursor: pointer;
 }

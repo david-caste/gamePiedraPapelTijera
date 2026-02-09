@@ -4,8 +4,9 @@ const vistaMenuInicial = document.querySelector(".container-menu");
 const seccionEleccionPersonaje = document.getElementById("seleccion-personaje");
 const opcionPersonajesContainer = document.getElementById("skin-personaje");
 
-//Datos ataque
+//Sección ataque
 const skinJugador = document.getElementById("etiqueta-jugador");
+const seccionAtaque = document.getElementById("ataque");
 
 //Botones
 const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
@@ -25,8 +26,8 @@ class personaje {
 
 //Inserción de personajes
 let personajeUno = new personaje("Warrior", './img/character_1.webp');
-let personajeDos = new personaje("Mage", './img/character_3.jpg');
-let personajeTres = new personaje("Archer", './img/character_2.webp');
+let personajeDos = new personaje("Mage", './img/character_1.webp');
+let personajeTres = new personaje("Archer", './img/character_1.webp');
 
 //Ataques de personajes
 personajeUno.ataques.push(
@@ -93,4 +94,14 @@ botonMenu.addEventListener("click", () => {
     vistaMenuInicial.style.display = "none";
     seccionEleccionPersonaje.style.display = "flex";
 });
+
+//Boton Elección personaje
+botonSeleccionarPersonaje.addEventListener("click", () => {
+    seccionEleccionPersonaje.style.display = "none";
+    seccionAtaque.style.display = "flex";
+});
+
+//eventos de mouse
+
+
 //Funciones
