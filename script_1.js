@@ -5,7 +5,7 @@ const seccionEleccionPersonaje = document.getElementById("seleccion-personaje");
 const opcionPersonajesContainer = document.getElementById("skin-personaje");
 
 //Sección ataque
-const skinJugador = document.getElementById("etiqueta-jugador");
+const skinJugador = document.getElementById("ataques-jugador");
 const seccionAtaque = document.getElementById("ataque");
 
 //Botones
@@ -68,8 +68,6 @@ personajes.forEach((personaje) => {
     opcionPersonajesContainer.innerHTML += opcionPersonajes;
 });
 
-//Sección Skin personaje oculto
-skinJugador.style.display = "none";
 //Sección ataque oculto
 seccionAtaque.style.display = "none";
 continuarAtaque.style.display = "none";
@@ -132,7 +130,7 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
         seccionAtaque.style.display = "flex";
         continuarAtaque.style.display = "flex";
         personajeSeleccionado.ataques.forEach((ataque) => {
-            seccionAtaque.innerHTML += `
+            skinJugador.innerHTML += `
                 <button id="${ataque.id}" class="btn-ataque">
                     ${ataque.nombre}
                 </button>

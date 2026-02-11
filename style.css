@@ -74,9 +74,8 @@ body {
 
 /*Sección ataque*/
 #ataque {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .btn-ataque{
@@ -95,6 +94,21 @@ body {
     justify-content: center;
 }
 
+.jugador h2{
+    text-align: center;
+    color: #fff;
+}
+
+#ataques-jugador{
+    flex-direction: column;
+}
+
+/*Efecto mouse sobre las opciones de ataque*/
+#ataques-jugador button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 .btn-continuar-ataque{
     box-sizing: content-box;
     font-size: 20px;
@@ -102,7 +116,13 @@ body {
     width: 130px;
     padding: 10px;
     background-color: rgb(123, 201, 204);
-    margin-top: 55px;
+    margin-top: 35px;
     border-radius: 20px;
     border: solid 3px transparent;
+}
+
+.btn-continuar-ataque:hover{
+    opacity: 0.8;
+    border: solid 3px rgb(230, 245, 27);
+    cursor: pointer;
 }
