@@ -12,11 +12,14 @@ const seccionAtaque = document.getElementById("ataque");
 const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
 const botonMenu = document.getElementById("btn-menu");
 const continuarAtaque = document.querySelector(".contenedor-btn-continuar-ataque");
+
 //Variables
 let personajes = [];
 let opcionPersonajes;
 let personajeSeleccionado;
 let datosPersonaje;
+let eleccionEnemigo;
+let ataqueJugador;
 
 //Clase personaje
 class personaje {
@@ -140,9 +143,37 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
     } else {
         alert("Por favor, selecciona una skin primero.");
     }
-})
+});
 
-//Mostrar personaje seleccionado
-
-
+//Eventos botones ataque
+skinJugador.addEventListener("click", (e) => {
+    if(e.target.classList.contains("btn-tijera")){
+        ataqueJugador = "tijera";
+    }else if(e.target.classList.contains("btn-piedra")){
+        ataqueJugador = "piedra";
+    }else if(e.target.classList.contains("btn-papel")){
+        ataqueJugador = "papel";
+    }
+    console.log("Ataque del jugador: " + ataqueJugador);
+    ataqueEnemigo();
+    console.log("Ataque del enemigo: " + eleccionEnemigo);
+});
 //Funciones
+
+//Elección ataque enemigo
+function ataqueEnemigo(){
+    let eleccion = aleatorio(0, personajeSeleccionado.ataques.length - 1);
+    if(eleccion == 0){
+        eleccionEnemigo = "tijera";
+    }else if(eleccion == 1){
+        eleccionEnemigo = "piedra";
+    }else if(eleccion == 2){
+        eleccionEnemigo = "papel";
+    }
+    return eleccionEnemigo;
+}
+
+//aleatoridad
+function aleatorio(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
