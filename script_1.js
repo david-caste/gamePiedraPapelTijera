@@ -8,11 +8,24 @@ const opcionPersonajesContainer = document.getElementById("skin-personaje");
 const skinJugador = document.getElementById("ataques-jugador");
 const seccionAtaque = document.getElementById("ataque");
 const botonesAtaque = document.querySelectorAll(".btn-ataque");
+let personajeElegido;
+
+//sección combate
+const seccionCombate = document.getElementById("combate");
+const jugador = document.querySelector(".jugador");
+const enemigo = document.querySelector(".enemigo");
+
+//sección muestra de combate
+const seccionCombateMuestra = document.getElementById("combate-muestra");
+const CombateJugador = document.getElementById("jugador");
+const CombateEnemigo = document.getElementById("enemigo");
+const resultadoBatalla = document.getElementById("resultado-batalla");
 
 //Botones
 const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
 const botonMenu = document.getElementById("btn-menu");
 const continuarAtaque = document.querySelector(".contenedor-btn-continuar-ataque");
+//const btnContinuarAtaque = document.querySelectorAll(".btn-continuar-ataque");
 
 //Variables
 let personajes = [];
@@ -21,6 +34,8 @@ let personajeSeleccionado;
 let datosPersonaje;
 let eleccionEnemigo;
 let ataqueJugador;
+let contenedorJugador;
+let contenedorEnemigo;
 
 //Clase personaje
 class personaje {
@@ -108,7 +123,7 @@ opcionPersonajesContainer.addEventListener("click", (e) => {
 
 // Validación al presionar el botón "Seleccionar"
 botonSeleccionarPersonaje.addEventListener("click", () => {
-    const personajeElegido = document.querySelector('#skin-personaje img.selected');
+    personajeElegido = document.querySelector('#skin-personaje img.selected');
     
     //Eliminar imagenes no selecionadas
     if(personajeElegido){
@@ -154,11 +169,37 @@ skinJugador.addEventListener('click', (e) => {
     if (e.target.classList.contains('btn-ataque')) {
         ataqueJugador = e.target.innerText; // Guardamos el emoji o nombre
         ataqueJugador = interpretarAtaqueJugador(ataqueJugador); // Convertimos el emoji a su nombre correspondiente
-        
-        ataqueEnemigo();
-
-        combate(ataqueJugador, eleccionEnemigo);
+        eleccionEnemigo = ataqueEnemigo();
     }
+});
+
+//Ejecutar combate al presionar continuar
+continuarAtaque.addEventListener('click', () => {
+    let resultado = combate(ataqueJugador, eleccionEnemigo);
+    let personajeEnemigoSeleccionado = personajeEnemigo();
+
+    //Jugador
+    contenedorJugador = `
+    <img src=${personajeSeleccionado.img} alt=${personajeSeleccionado.nombre}">
+    <p>Jugador: ${ataqueJugador}</p>
+    `;
+
+    //Enemigo
+    contenedorEnemigo = `
+    <img src=${personajeEnemigoSeleccionado.img} alt=${personajeEnemigoSeleccionado.nombre}">
+    <p>Enemigo: ${eleccionEnemigo}</p>
+    `;
+    CombateJugador.innerHTML = contenedorJugador;
+    CombateEnemigo.innerHTML = contenedorEnemigo;
+
+    seccionAtaque.style.display = "none";
+    continuarAtaque.style.display = "none";
+    seccionEleccionPersonaje.style.display = "none";
+    seccionCombateMuestra.style.display = "flex";
+
+    resultadoBatalla.innerHTML = `<p>Resultado del combate: ${resultado}</p>`;
+
+    console.log("Jugador:", ataqueJugador, "Enemigo:", eleccionEnemigo, " Resultado del combate:", resultado);
 });
 
 //Funciones
@@ -192,12 +233,18 @@ function ataqueEnemigo(){
 //combate
 function combate(ataqueJugador, eleccionEnemigo){
     if(ataqueJugador == eleccionEnemigo){
-        console.log("Empate");
+        return "Empate";
     }else if((ataqueJugador == "tijera" && eleccionEnemigo == "papel") || (ataqueJugador == "papel" && eleccionEnemigo == "piedra") || (ataqueJugador == "piedra" && eleccionEnemigo == "tijera")){
-        console.log("Ganaste");
+        return "Ganaste";
     }else{
-        console.log("Perdiste");
+        return "Perdiste";
     }
+}
+
+//Elección personaje enemigo
+function personajeEnemigo(){
+    let eleccion = aleatorio(0, personajes.length - 1);
+    return personajes[eleccion];
 }
 
 //aleatoridad

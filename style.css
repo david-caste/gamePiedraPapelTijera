@@ -126,3 +126,43 @@ body {
     border: solid 3px rgb(230, 245, 27);
     cursor: pointer;
 }
+
+/*Batalla*/
+#combate-muestra{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-size: 30px;
+}
+
+#seleccionados{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 50px;
+}
+
+#jugador{
+    border: solid 3px rgb(123, 201, 204);
+    padding: 18px;
+}
+
+#jugador img{
+    width: 180px;
+}
+
+#enemigo{
+    border: solid 3px rgb(123, 201, 204);
+    padding: 18px;
+}
+
+#enemigo img{
+    width: 180px;
+}
+
+#resultado-batalla{
+    margin-top: 30px;
+    font-size: 40px;
+    color: rgb(27, 245, 227);
+}
