@@ -7,6 +7,7 @@ const opcionPersonajesContainer = document.getElementById("skin-personaje");
 //Sección ataque
 const skinJugador = document.getElementById("ataques-jugador");
 const seccionAtaque = document.getElementById("ataque");
+const botonesAtaque = document.querySelectorAll(".btn-ataque");
 
 //Botones
 const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
@@ -146,19 +147,34 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
 });
 
 //Eventos botones ataque
-skinJugador.addEventListener("click", (e) => {
-    if(e.target.classList.contains("btn-tijera")){
-        ataqueJugador = "tijera";
-    }else if(e.target.classList.contains("btn-piedra")){
-        ataqueJugador = "piedra";
-    }else if(e.target.classList.contains("btn-papel")){
-        ataqueJugador = "papel";
+
+//Boton seleccionado ataque
+skinJugador.addEventListener('click', (e) => {
+    // Verificamos que el clic sea en un botón de ataque
+    if (e.target.classList.contains('btn-ataque')) {
+        ataqueJugador = e.target.innerText; // Guardamos el emoji o nombre
+        ataqueJugador = interpretarAtaqueJugador(ataqueJugador); // Convertimos el emoji a su nombre correspondiente
+        
+        ataqueEnemigo();
+
+        combate(ataqueJugador, eleccionEnemigo);
     }
-    console.log("Ataque del jugador: " + ataqueJugador);
-    ataqueEnemigo();
-    console.log("Ataque del enemigo: " + eleccionEnemigo);
 });
+
 //Funciones
+
+//Elección ataque jugador
+function interpretarAtaqueJugador(ataqueJugador){
+    let ataqueEscogidoJugador;
+    if (ataqueJugador == "✂") {
+        ataqueEscogidoJugador = "tijera";
+    }else if (ataqueJugador == "🥌") {
+        ataqueEscogidoJugador = "piedra";
+    }else if (ataqueJugador == "📄") {
+        ataqueEscogidoJugador = "papel";
+    }
+    return ataqueEscogidoJugador;
+}
 
 //Elección ataque enemigo
 function ataqueEnemigo(){
@@ -171,6 +187,17 @@ function ataqueEnemigo(){
         eleccionEnemigo = "papel";
     }
     return eleccionEnemigo;
+}
+
+//combate
+function combate(ataqueJugador, eleccionEnemigo){
+    if(ataqueJugador == eleccionEnemigo){
+        console.log("Empate");
+    }else if((ataqueJugador == "tijera" && eleccionEnemigo == "papel") || (ataqueJugador == "papel" && eleccionEnemigo == "piedra") || (ataqueJugador == "piedra" && eleccionEnemigo == "tijera")){
+        console.log("Ganaste");
+    }else{
+        console.log("Perdiste");
+    }
 }
 
 //aleatoridad
