@@ -7,7 +7,7 @@ import {listaPersonajes} from "./scripts/config/personajes.js";
 import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
 
 //Ocultar - Mostrar secciones
-import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques } from "./scripts/components/UI.js";
+import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques, mostrarDetalleCombate } from "./scripts/components/UI.js";
 
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
@@ -90,23 +90,32 @@ continuarAtaque.addEventListener('click', () => {
     let resultado = combate(ataqueJugador, eleccionEnemigo);
     let personajeEnemigoSeleccionado = personajeEnemigo(listaPersonajes);
 
-    //Jugador
-    contenedorJugador = `
-    <img src=${personajeSeleccionado.img} alt=${personajeSeleccionado.nombre}">
-    <p>Jugador: ${ataqueJugador}</p>
-    `;
+    // Creamos el objeto config con los datos que pide la función
+    const configCombate = {
+        nodos: {
+            jugador: CombateJugador,
+            enemigo: CombateEnemigo,
+            resultado: resultadoBatalla
+        },
 
-    //Enemigo
-    contenedorEnemigo = `
-    <img src=${personajeEnemigoSeleccionado.img} alt=${personajeEnemigoSeleccionado.nombre}">
-    <p>Enemigo: ${eleccionEnemigo}</p>
-    `;
-    CombateJugador.innerHTML = contenedorJugador;
-    CombateEnemigo.innerHTML = contenedorEnemigo;
+        datosJugador: {
+            img: personajeSeleccionado.img,
+            nombre: personajeSeleccionado.nombre,
+            ataque: ataqueJugador
+        },
+
+        datosEnemigo: {
+            img: personajeEnemigoSeleccionado.img,
+            nombre: personajeEnemigoSeleccionado.nombre,
+            ataque: eleccionEnemigo
+        },
+
+        resultado: resultado
+    };
+
+    mostrarDetalleCombate(configCombate);
 
     ocultarMostrar([seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra], [seccionCombateMuestra])
-
-    resultadoBatalla.innerHTML = `<p>Resultado del combate: ${resultado}</p>`;
 
     console.log("Jugador:", ataqueJugador, "Enemigo:", eleccionEnemigo, " Resultado del combate:", resultado);
 });

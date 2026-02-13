@@ -51,3 +51,23 @@ export function renderizarAtaques(contenedor, personajeSeleccionado){
     });
 }
 
+///Muestra el resumen visual del combate
+export function mostrarDetalleCombate(config) {
+    const { 
+        nodos, // { jugador, enemigo, resultado }
+        datosJugador, // { img, nombre, ataque }
+        datosEnemigo  // { img, nombre, ataque }
+    } = config;
+
+    nodos.jugador.innerHTML = `
+        <img src="${datosJugador.img}" alt="${datosJugador.nombre}">
+        <p>Jugador: ${datosJugador.ataque}</p>
+    `;
+
+    nodos.enemigo.innerHTML = `
+        <img src="${datosEnemigo.img}" alt="${datosEnemigo.nombre}">
+        <p>Enemigo: ${datosEnemigo.ataque}</p>
+    `;
+
+    nodos.resultado.innerHTML = `<p>Resultado del combate: ${config.resultado}</p>`;
+}
