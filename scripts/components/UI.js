@@ -4,6 +4,7 @@ export function ocultarMostrar(ocultar = [], mostrar = []) {
     mostrar.forEach(element => element.style.display = 'flex');
 }
 
+//inserción personajes en el DOM
 export function renderizarOpcionesPersonajes(contenedor, lista){
     contenedor.innerHTML = lista.map((personaje) => `
         <input type="radio" name="personaje" id=${personaje.nombre} style="display:none"/>
@@ -12,4 +13,18 @@ export function renderizarOpcionesPersonajes(contenedor, lista){
             <img src=${personaje.img} alt=${personaje.nombre}>
         </label>
     `).join("");
+}
+
+//Resalta visualmente el personaje seleccionado
+export function resaltarSeleccion(e, contenedor, personajeSeleccionado, listaPersonajes) {
+    if(e.target.tagName === "IMG") {
+        const imagenes = contenedor.querySelectorAll("img");
+        imagenes.forEach(img => img.classList.remove("selected"));
+        e.target.classList.add("selected");
+
+        personajeSeleccionado = listaPersonajes.find(p => p.nombre === e.target.alt);
+        
+        console.log("Datos del objeto rescatado:", personajeSeleccionado);
+    }
+    return personajeSeleccionado;
 }

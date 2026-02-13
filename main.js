@@ -7,7 +7,7 @@ import {listaPersonajes} from "./scripts/config/personajes.js";
 import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
 
 //Ocultar - Mostrar secciones
-import { ocultarMostrar, renderizarOpcionesPersonajes } from "./scripts/components/UI.js";
+import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion } from "./scripts/components/UI.js";
 
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
@@ -52,21 +52,7 @@ botonMenu.addEventListener("click", () => {
 
 //Mantener personaje seleccionado
 opcionPersonajesContainer.addEventListener("click", (e) => {
-    // Verificamos que se hizo clic en una imagen
-    if(e.target.tagName === "IMG") {
-        // 1. Quitamos la clase 'selected' de cualquier otra imagen
-        const imagenes = opcionPersonajesContainer.querySelectorAll("img");
-        imagenes.forEach(img => img.classList.remove("selected"));
-
-        // 2. Añadimos la clase a la imagen clicada
-        e.target.classList.add("selected");
-        
-        // RESCATE DE INFORMACIÓN:
-        // Buscamos en el array 'personajes' el objeto que tenga el mismo nombre que el 'alt' de la imagen
-        personajeSeleccionado = listaPersonajes.find(p => p.nombre === e.target.alt);
-        
-        console.log("Datos del objeto rescatado:", personajeSeleccionado);
-    }
+    personajeSeleccionado = resaltarSeleccion(e, opcionPersonajesContainer, personajeSeleccionado, listaPersonajes);
 });
 
 // Validación al presionar el botón "Seleccionar"
