@@ -7,7 +7,7 @@ import {listaPersonajes} from "./scripts/config/personajes.js";
 import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
 
 //Ocultar - Mostrar secciones
-import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla } from "./scripts/components/UI.js";
+import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques } from "./scripts/components/UI.js";
 
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
@@ -62,18 +62,11 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
     //Eliminar imagenes no selecionadas
     limpiarPantalla(personajeElegido);
 
+    // Validar si se ha seleccionado un personaje
     if (personajeElegido) {
         alert("¡Has elegido a tu personaje!");
-        botonSeleccionarPersonaje.style.display = "none";
-        seccionAtaque.style.display = "flex";
-        continuarAtaque.style.display = "flex";
-        personajeSeleccionado.ataques.forEach((ataque) => {
-            skinJugador.innerHTML += `
-                <button id="${ataque.id}" class="btn-ataque">
-                    ${ataque.nombre}
-                </button>
-            `;
-        });
+        ocultarMostrar([botonSeleccionarPersonaje], [seccionAtaque, continuarAtaque]);
+        renderizarAtaques(skinJugador, personajeSeleccionado);// Renderizar ataques del personaje seleccionado
         
     } else {
         alert("Por favor, selecciona una skin primero.");

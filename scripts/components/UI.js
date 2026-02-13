@@ -38,3 +38,16 @@ export function limpiarPantalla(personajeSeleccionado){
         }
     });
 }
+
+//Crea los botones de ataque dinámicamente
+export function renderizarAtaques(contenedor, personajeSeleccionado){
+    contenedor.innerHTML = "";
+    personajeSeleccionado.ataques.forEach((ataque) => {
+        contenedor.innerHTML += `
+            <button id="${ataque.id}" class="btn-ataque">
+                ${ataque.nombre}
+            </button>
+        `;
+    });
+}
+
