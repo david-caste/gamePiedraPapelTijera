@@ -7,7 +7,7 @@ import {listaPersonajes} from "./scripts/config/personajes.js";
 import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
 
 //Ocultar - Mostrar secciones
-import { ocultarMostrar } from "./scripts/components/UI.js";
+import { ocultarMostrar, renderizarOpcionesPersonajes } from "./scripts/components/UI.js";
 
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
@@ -31,7 +31,6 @@ const resultadoBatalla = document.getElementById("resultado-batalla");
 const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
 const botonMenu = document.getElementById("btn-menu");
 const continuarAtaque = document.querySelector(".contenedor-btn-continuar-ataque");
-//const btnContinuarAtaque = document.querySelectorAll(".btn-continuar-ataque");
 
 //Variables
 let personajeSeleccionado;
@@ -43,7 +42,8 @@ let contenedorEnemigo;
 //Ocultar elección ataque y eleccion de personaje
 ocultarMostrar([seccionEleccionPersonaje, seccionAtaque, continuarAtaque], []);
 
-inicializarJuego();
+//Inserción personajes en el DOM
+renderizarOpcionesPersonajes(opcionPersonajesContainer, listaPersonajes);
 
 //Boton inicio menu
 botonMenu.addEventListener("click", () => {
@@ -146,15 +146,3 @@ continuarAtaque.addEventListener('click', () => {
 
     console.log("Jugador:", ataqueJugador, "Enemigo:", eleccionEnemigo, " Resultado del combate:", resultado);
 });
-
-//Funciones
-
-function inicializarJuego(){
-    opcionPersonajesContainer.innerHTML = listaPersonajes.map((personaje) => `
-    <input type="radio" name="personaje" id=${personaje.nombre} style="display:none"/>
-    <label class="tarjeta-personaje" for=${personaje.nombre}>
-        <p class="${personaje.nombre}">${personaje.nombre}</p>
-        <img src=${personaje.img} alt=${personaje.nombre}>
-    </label>
-    `).join("");
-};
