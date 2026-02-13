@@ -28,3 +28,13 @@ export function resaltarSeleccion(e, contenedor, personajeSeleccionado, listaPer
     }
     return personajeSeleccionado;
 }
+
+//Limpia la pantalla dejando solo el personaje elegido por el usuario
+export function limpiarPantalla(personajeSeleccionado){
+    const todosLosLabels = document.querySelectorAll('.tarjeta-personaje');
+    todosLosLabels.forEach((label) => {
+        if(!label.contains(personajeSeleccionado)){
+            label.style.display = 'none';
+        }
+    });
+}

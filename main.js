@@ -7,7 +7,7 @@ import {listaPersonajes} from "./scripts/config/personajes.js";
 import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
 
 //Ocultar - Mostrar secciones
-import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion } from "./scripts/components/UI.js";
+import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla } from "./scripts/components/UI.js";
 
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
@@ -60,22 +60,7 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
     personajeElegido = document.querySelector('#skin-personaje img.selected');
     
     //Eliminar imagenes no selecionadas
-    if(personajeElegido){
-        const todosLosPersonajes = document.querySelectorAll('#skin-personaje img');
-        const todosLosLabels = document.querySelectorAll('.tarjeta-personaje');
-        todosLosPersonajes.forEach((img) => {
-            if(!img.classList.contains("selected")) {
-                img.style.display = "none";
-            }
-        // 2. Filtramos: ocultamos los que NO contienen la imagen seleccionada    
-        todosLosLabels.forEach((label) => {
-            // Buscamos si la imagen seleccionada está dentro de este label
-            if (!label.contains(personajeElegido)) {
-                label.style.display = 'none';
-            }
-        });
-        });
-    }
+    limpiarPantalla(personajeElegido);
 
     if (personajeElegido) {
         alert("¡Has elegido a tu personaje!");
