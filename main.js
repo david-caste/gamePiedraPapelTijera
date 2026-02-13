@@ -1,3 +1,14 @@
+//importaciones
+
+//Personajes
+import {listaPersonajes} from "./scripts/config/personajes.js";
+
+//Lógica del juego
+import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
+
+//Ocultar - Mostrar secciones
+import { ocultarMostrar } from "./scripts/components/UI.js";
+
 //Menú
 const vistaMenuInicial = document.querySelector(".container-menu");
 //Elección Personaje
@@ -7,13 +18,8 @@ const opcionPersonajesContainer = document.getElementById("skin-personaje");
 //Sección ataque
 const skinJugador = document.getElementById("ataques-jugador");
 const seccionAtaque = document.getElementById("ataque");
-const botonesAtaque = document.querySelectorAll(".btn-ataque");
-let personajeElegido;
 
-//sección combate
-const seccionCombate = document.getElementById("combate");
-const jugador = document.querySelector(".jugador");
-const enemigo = document.querySelector(".enemigo");
+let personajeElegido;
 
 //sección muestra de combate
 const seccionCombateMuestra = document.getElementById("combate-muestra");
@@ -28,78 +34,20 @@ const continuarAtaque = document.querySelector(".contenedor-btn-continuar-ataque
 //const btnContinuarAtaque = document.querySelectorAll(".btn-continuar-ataque");
 
 //Variables
-let personajes = [];
-let opcionPersonajes;
 let personajeSeleccionado;
-let datosPersonaje;
 let eleccionEnemigo;
 let ataqueJugador;
 let contenedorJugador;
 let contenedorEnemigo;
 
-//Clase personaje
-class personaje {
-    constructor(nombre, img) {
-        this.nombre = nombre;
-        this.img = img;
-        this.ataques = [];
-    }
-}
+//Ocultar elección ataque y eleccion de personaje
+ocultarMostrar([seccionEleccionPersonaje, seccionAtaque, continuarAtaque], []);
 
-//Inserción de personajes
-let personajeUno = new personaje("Warrior", './img/character_1.webp');
-let personajeDos = new personaje("Mage", './img/character_1.webp');
-let personajeTres = new personaje("Archer", './img/character_1.webp');
-
-//Ataques de personajes
-personajeUno.ataques.push(
-    {nombre: "✂", id: "btn-tijera"},
-    {nombre: "🥌", id: "btn-piedra"},
-    {nombre: "📄", id: "btn-papel"}
-)
-
-personajeDos.ataques.push(
-    {nombre: "✂", id: "btn-tijera"},
-    {nombre: "🥌", id: "btn-piedra"},
-    {nombre: "📄", id: "btn-papel"}
-)
-
-personajeTres.ataques.push(
-    {nombre: "✂", id: "btn-tijera"},
-    {nombre: "🥌", id: "btn-piedra"},
-    {nombre: "📄", id: "btn-papel"}
-)
-
-//Ocultar elección personaje
-seccionEleccionPersonaje.style.display = "none";
-
-personajes.push(personajeUno, personajeDos, personajeTres);
-
-personajes.forEach((personaje) => {
-    opcionPersonajes = `
-    <input type="radio" name="personaje" id=${personaje.nombre} style="display:none"/>
-    <label class="tarjeta-personaje" for=${personaje.nombre}>
-        <p class="${personaje.nombre}">${personaje.nombre}</p>
-        <img src=${personaje.img} alt=${personaje.nombre}>
-    </label>
-    `;
-    //Personajes agregados en HTML
-    opcionPersonajesContainer.innerHTML += opcionPersonajes;
-});
-
-//Sección ataque oculto
-seccionAtaque.style.display = "none";
-continuarAtaque.style.display = "none";
-
-//Input personajes
-const inputPersonajeUno = document.getElementById("personajeUno");
-const inputPersonajeDos = document.getElementById("personajeDos");
-const inputPersonajeTres = document.getElementById("personajeTres");
+inicializarJuego();
 
 //Boton inicio menu
 botonMenu.addEventListener("click", () => {
-    vistaMenuInicial.style.display = "none";
-    seccionEleccionPersonaje.style.display = "flex";
+    ocultarMostrar([vistaMenuInicial], [seccionEleccionPersonaje]);
 });
 
 //Mantener personaje seleccionado
@@ -115,7 +63,7 @@ opcionPersonajesContainer.addEventListener("click", (e) => {
         
         // RESCATE DE INFORMACIÓN:
         // Buscamos en el array 'personajes' el objeto que tenga el mismo nombre que el 'alt' de la imagen
-        personajeSeleccionado = personajes.find(p => p.nombre === e.target.alt);
+        personajeSeleccionado = listaPersonajes.find(p => p.nombre === e.target.alt);
         
         console.log("Datos del objeto rescatado:", personajeSeleccionado);
     }
@@ -169,14 +117,14 @@ skinJugador.addEventListener('click', (e) => {
     if (e.target.classList.contains('btn-ataque')) {
         ataqueJugador = e.target.innerText; // Guardamos el emoji o nombre
         ataqueJugador = interpretarAtaqueJugador(ataqueJugador); // Convertimos el emoji a su nombre correspondiente
-        eleccionEnemigo = ataqueEnemigo();
+        eleccionEnemigo = ataqueEnemigo(personajeSeleccionado);
     }
 });
 
 //Ejecutar combate al presionar continuar
 continuarAtaque.addEventListener('click', () => {
     let resultado = combate(ataqueJugador, eleccionEnemigo);
-    let personajeEnemigoSeleccionado = personajeEnemigo();
+    let personajeEnemigoSeleccionado = personajeEnemigo(listaPersonajes);
 
     //Jugador
     contenedorJugador = `
@@ -192,10 +140,7 @@ continuarAtaque.addEventListener('click', () => {
     CombateJugador.innerHTML = contenedorJugador;
     CombateEnemigo.innerHTML = contenedorEnemigo;
 
-    seccionAtaque.style.display = "none";
-    continuarAtaque.style.display = "none";
-    seccionEleccionPersonaje.style.display = "none";
-    seccionCombateMuestra.style.display = "flex";
+    ocultarMostrar([seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra], [seccionCombateMuestra])
 
     resultadoBatalla.innerHTML = `<p>Resultado del combate: ${resultado}</p>`;
 
@@ -204,50 +149,12 @@ continuarAtaque.addEventListener('click', () => {
 
 //Funciones
 
-//Elección ataque jugador
-function interpretarAtaqueJugador(ataqueJugador){
-    let ataqueEscogidoJugador;
-    if (ataqueJugador == "✂") {
-        ataqueEscogidoJugador = "tijera";
-    }else if (ataqueJugador == "🥌") {
-        ataqueEscogidoJugador = "piedra";
-    }else if (ataqueJugador == "📄") {
-        ataqueEscogidoJugador = "papel";
-    }
-    return ataqueEscogidoJugador;
-}
-
-//Elección ataque enemigo
-function ataqueEnemigo(){
-    let eleccion = aleatorio(0, personajeSeleccionado.ataques.length - 1);
-    if(eleccion == 0){
-        eleccionEnemigo = "tijera";
-    }else if(eleccion == 1){
-        eleccionEnemigo = "piedra";
-    }else if(eleccion == 2){
-        eleccionEnemigo = "papel";
-    }
-    return eleccionEnemigo;
-}
-
-//combate
-function combate(ataqueJugador, eleccionEnemigo){
-    if(ataqueJugador == eleccionEnemigo){
-        return "Empate";
-    }else if((ataqueJugador == "tijera" && eleccionEnemigo == "papel") || (ataqueJugador == "papel" && eleccionEnemigo == "piedra") || (ataqueJugador == "piedra" && eleccionEnemigo == "tijera")){
-        return "Ganaste";
-    }else{
-        return "Perdiste";
-    }
-}
-
-//Elección personaje enemigo
-function personajeEnemigo(){
-    let eleccion = aleatorio(0, personajes.length - 1);
-    return personajes[eleccion];
-}
-
-//aleatoridad
-function aleatorio(min, max){
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
+function inicializarJuego(){
+    opcionPersonajesContainer.innerHTML = listaPersonajes.map((personaje) => `
+    <input type="radio" name="personaje" id=${personaje.nombre} style="display:none"/>
+    <label class="tarjeta-personaje" for=${personaje.nombre}>
+        <p class="${personaje.nombre}">${personaje.nombre}</p>
+        <img src=${personaje.img} alt=${personaje.nombre}>
+    </label>
+    `).join("");
+};
