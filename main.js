@@ -1,43 +1,28 @@
-//importaciones
+////// ////// ////// importaciones ////// ////// //////
+import {listaPersonajes} from "./scripts/config/personajes.js";//Personajes
+import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";//Lógica del juego
+import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques, mostrarDetalleCombate } from "./scripts/components/UI.js";//Ocultar - 
 
-//Personajes
-import {listaPersonajes} from "./scripts/config/personajes.js";
+////// ////// ////// Constantes ////// ////// //////
+// Mostrar secciones
+const vistaMenuInicial = document.querySelector(".container-menu");//Menú
+const seccionEleccionPersonaje = document.getElementById("seleccion-personaje");//Elección Personaje
+const opcionPersonajesContainer = document.getElementById("skin-personaje");//Elección Personaje
+const skinJugador = document.getElementById("ataques-jugador");//Sección ataque
+const seccionAtaque = document.getElementById("ataque");//Sección ataque
+const seccionCombateMuestra = document.getElementById("combate-muestra");//sección muestra de combate
+const CombateJugador = document.getElementById("jugador");//sección muestra de combate
+const CombateEnemigo = document.getElementById("enemigo");//sección muestra de combate
+const resultadoBatalla = document.getElementById("resultado-batalla");//sección muestra de combate
+const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");//Botones
+const botonMenu = document.getElementById("btn-menu");//Botones
+const continuarAtaque = document.querySelector(".contenedor-btn-continuar-ataque");//Botones
 
-//Lógica del juego
-import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";
-
-//Ocultar - Mostrar secciones
-import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques, mostrarDetalleCombate } from "./scripts/components/UI.js";
-
-//Menú
-const vistaMenuInicial = document.querySelector(".container-menu");
-//Elección Personaje
-const seccionEleccionPersonaje = document.getElementById("seleccion-personaje");
-const opcionPersonajesContainer = document.getElementById("skin-personaje");
-
-//Sección ataque
-const skinJugador = document.getElementById("ataques-jugador");
-const seccionAtaque = document.getElementById("ataque");
-
-let personajeElegido;
-
-//sección muestra de combate
-const seccionCombateMuestra = document.getElementById("combate-muestra");
-const CombateJugador = document.getElementById("jugador");
-const CombateEnemigo = document.getElementById("enemigo");
-const resultadoBatalla = document.getElementById("resultado-batalla");
-
-//Botones
-const botonSeleccionarPersonaje = document.getElementById("eleccion-personajes");
-const botonMenu = document.getElementById("btn-menu");
-const continuarAtaque = document.querySelector(".contenedor-btn-continuar-ataque");
-
-//Variables
+////// ////// ////// Variables ////// ////// //////
 let personajeSeleccionado;
 let eleccionEnemigo;
 let ataqueJugador;
-let contenedorJugador;
-let contenedorEnemigo;
+let personajeElegido;//Sección ataque
 
 //Ocultar elección ataque y eleccion de personaje
 ocultarMostrar([seccionEleccionPersonaje, seccionAtaque, continuarAtaque], []);
@@ -73,7 +58,7 @@ botonSeleccionarPersonaje.addEventListener("click", () => {
     }
 });
 
-//Eventos botones ataque
+////// ////// ////// Eventos botones ataque ////// ////// //////
 
 //Boton seleccionado ataque
 skinJugador.addEventListener('click', (e) => {
@@ -115,7 +100,16 @@ continuarAtaque.addEventListener('click', () => {
 
     mostrarDetalleCombate(configCombate);
 
-    ocultarMostrar([seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra], [seccionCombateMuestra])
+    ocultarMostrar(
+            [seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra], [seccionCombateMuestra]
+        );
+
+    setTimeout(() => {
+            ocultarMostrar(
+            [seccionCombateMuestra], [seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra]
+        );
+        }, 5000);
+
 
     console.log("Jugador:", ataqueJugador, "Enemigo:", eleccionEnemigo, " Resultado del combate:", resultado);
 });
