@@ -1,7 +1,7 @@
 ////// ////// ////// importaciones ////// ////// //////
 import {listaPersonajes} from "./scripts/config/personajes.js";//Personajes
 import { interpretarAtaqueJugador, ataqueEnemigo, combate, personajeEnemigo } from "./scripts/core/gameLogic.js";//Lógica del juego
-import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques, mostrarDetalleCombate } from "./scripts/components/UI.js";//Ocultar - 
+import { ocultarMostrar, renderizarOpcionesPersonajes, resaltarSeleccion, limpiarPantalla, renderizarAtaques, mostrarDetalleCombate, vistaRealentizada } from "./scripts/components/UI.js";//Ocultar - 
 
 ////// ////// ////// Constantes ////// ////// //////
 // Mostrar secciones
@@ -23,6 +23,7 @@ let personajeSeleccionado;
 let eleccionEnemigo;
 let ataqueJugador;
 let personajeElegido;//Sección ataque
+let resultado;
 
 //Ocultar elección ataque y eleccion de personaje
 ocultarMostrar([seccionEleccionPersonaje, seccionAtaque, continuarAtaque], []);
@@ -72,7 +73,7 @@ skinJugador.addEventListener('click', (e) => {
 
 //Ejecutar combate al presionar continuar
 continuarAtaque.addEventListener('click', () => {
-    let resultado = combate(ataqueJugador, eleccionEnemigo);
+    resultado = combate(ataqueJugador, eleccionEnemigo);
     let personajeEnemigoSeleccionado = personajeEnemigo(listaPersonajes);
 
     // Creamos el objeto config con los datos que pide la función
@@ -101,14 +102,11 @@ continuarAtaque.addEventListener('click', () => {
     mostrarDetalleCombate(configCombate);
 
     ocultarMostrar(
-            [seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra], [seccionCombateMuestra]
+            [seccionAtaque, continuarAtaque, seccionEleccionPersonaje], [seccionCombateMuestra]
         );
 
-    setTimeout(() => {
-            ocultarMostrar(
-            [seccionCombateMuestra], [seccionAtaque, continuarAtaque, seccionEleccionPersonaje, seccionCombateMuestra]
-        );
-        }, 5000);
+    //vista realentizada
+    vistaRealentizada([seccionCombateMuestra], [seccionAtaque, continuarAtaque, seccionEleccionPersonaje], 5000);
 
 
     console.log("Jugador:", ataqueJugador, "Enemigo:", eleccionEnemigo, " Resultado del combate:", resultado);

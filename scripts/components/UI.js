@@ -71,3 +71,10 @@ export function mostrarDetalleCombate(config) {
 
     nodos.resultado.innerHTML = `<p>Resultado del combate: ${config.resultado}</p>`;
 }
+
+//vista en 5 segundos
+export function vistaRealentizada(ocultar = [], mostrar = [], tiempo){
+    setTimeout(() => {//volver a vista anterior en 5 segundos
+            ocultarMostrar(ocultar, mostrar);
+        }, tiempo);
+}
