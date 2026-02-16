@@ -24,6 +24,10 @@ let eleccionEnemigo;
 let ataqueJugador;
 let personajeElegido;//Sección ataque
 let resultado;
+let pruebaGanador = false;
+let contenedorJugador = 0;
+let contenedorEnemigo = 0;
+let turno = 1;
 
 //Ocultar elección ataque y eleccion de personaje
 ocultarMostrar([seccionEleccionPersonaje, seccionAtaque, continuarAtaque], []);
@@ -105,9 +109,24 @@ continuarAtaque.addEventListener('click', () => {
             [seccionAtaque, continuarAtaque, seccionEleccionPersonaje], [seccionCombateMuestra]
         );
 
-    //vista realentizada
-    vistaRealentizada([seccionCombateMuestra], [seccionAtaque, continuarAtaque, seccionEleccionPersonaje], 5000);
+    if(turno == 3){
+        console.log("Hay un ganador");
+    }else{
+        //vista realentizada
+        vistaRealentizada([seccionCombateMuestra], [seccionAtaque, continuarAtaque, seccionEleccionPersonaje], 5000);
+        //contenedorJugador++;
+        //contenedorEnemigo++;
+        turno++
+    }
 
+    if(contenedorJugador > contenedorEnemigo){
+        resultado = "Ganaste";
+    }else if(contenedorEnemigo > contenedorJugador){
+        resultado = "Perdiste";
+    }else{
+        resultado = "Empataste";
+    }
 
     console.log("Jugador:", ataqueJugador, "Enemigo:", eleccionEnemigo, " Resultado del combate:", resultado);
+    console.log("Turno: ", turno, " Contenedor Jugador: ", contenedorJugador, " Contenedor Enemigo: ", contenedorEnemigo, " Hay un ganador: ", pruebaGanador)
 });

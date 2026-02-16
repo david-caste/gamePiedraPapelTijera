@@ -43,23 +43,6 @@ export function personajeEnemigo(personajes){
     return personajes[eleccion];
 }
 
-//decidir un ganador
-export function elegirGanador(resultado){
-    let contenedorJugador;
-    let contenedorEnemigo;
-
-    for (; contenedorJugador || contenedorEnemigo < 4;) {
-        if(resultado == "Empate"){
-            contenedorJugador += 0;
-            contenedorEnemigo += 0;
-        }else if(resultado == "Ganaste"){
-            contenedorJugador++;
-        }else{
-            contenedorEnemigo++;
-        }
-    }
-}
-
 //aleatoridad
 function aleatorio(min, max){
     return Math.floor(Math.random() * (max - min + 1) + min)
