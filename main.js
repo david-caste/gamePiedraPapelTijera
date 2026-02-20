@@ -75,10 +75,28 @@ skinJugador.addEventListener('click', (e) => {
     }
 });
 
+    //Botones de ataque
+    const botonTijera = document.getElementById("btn-tijera");//Boton tijera
+    const botonPiedra = document.getElementById("btn-piedra");//Boton piedra
+    const botonPapel = document.getElementById("btn-papel");//Boton papel
+    
 //Ejecutar combate al presionar continuar
 continuarAtaque.addEventListener('click', () => {
     resultado = combate(ataqueJugador, eleccionEnemigo);
     let personajeEnemigoSeleccionado = personajeEnemigo(listaPersonajes);
+
+    botonTijera.addEventListener('click', function() {
+    this.disabled = true; // Desactiva el botón
+    }, { once: true });
+
+    botonPiedra.addEventListener('click', function() {
+    this.disabled = true; // Desactiva el botón
+    }, { once: true });
+
+    botonPapel.addEventListener('click', function() {
+    this.disabled = true; // Desactiva el botón
+    }, { once: true });
+
 
     // Creamos el objeto config con los datos que pide la función
     const configCombate = {
@@ -114,8 +132,11 @@ continuarAtaque.addEventListener('click', () => {
     }else{
         //vista realentizada
         vistaRealentizada([seccionCombateMuestra], [seccionAtaque, continuarAtaque, seccionEleccionPersonaje], 5000);
-        //contenedorJugador++;
-        //contenedorEnemigo++;
+        if(resultado == "Ganaste"){
+            contenedorJugador++
+        }else if(resultado == "Perdiste"){
+            contenedorEnemigo++
+        }
         turno++
     }
 

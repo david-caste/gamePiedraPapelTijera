@@ -82,7 +82,7 @@ body {
     font-size: 35px;
     width: 115px;
     height: 65px;
-    background-color: #e9e1e1;
+    background-color: #e9e1e1b4;
     border-color: transparent;
     margin: 15px;
     border-radius: 15px;
@@ -165,4 +165,14 @@ body {
     margin-top: 30px;
     font-size: 40px;
     color: rgb(27, 245, 227);
+}
+
+/*Efecto mouse sobre botones de ataque*/
+.btn-ataque:active{
+    opacity: 0.8;
+    border: solid 3px rgb(27, 245, 227);
+    border-radius: 20px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra interna */
+    transform: translateY(2px); /* Se mueve un poco hacia abajo */
+    border-color: #888;
 }
